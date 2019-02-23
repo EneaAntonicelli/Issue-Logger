@@ -20,3 +20,23 @@ Connects to MongoDB database and accesses it in an object oriented way.
 ### Cors
 
 Another middleware used in conjunction with Express which allows for cross origin resource sharing. This allows you to access resources from another domain, outside of your server. If you are going to use a MongoDB database server that is not running on your local machine or on your webserver, you will need cors.
+
+### BodyParser
+
+You need to use bodyParser() if you want the form data to be available in req.body.
+
+### app.use and how it works
+
+when app.use() is called with a function as it’s only argument:
+
+```app.use(function(req, res) {
+  // stuff
+});```
+
+It’ll match every request.
+That function will act as middleware.
+
+When app.use() is called with the a signature of the form:
+
+app.use('/test', cb);
+It’ll only match requests that start with /test.
