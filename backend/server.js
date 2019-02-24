@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 
 import Issue from "./models/Issue";
-import { runInNewContext } from "vm";
 
 const app = express();
 const router = express.Router();
@@ -72,6 +71,14 @@ router.route("/issues/update/:id").post(req, res => {
       });
   });
 });
+
+router.route("/issues/delete/:id").get((req, res) => {
+  Issue.findByIdAndRemove({ _id: req.params.id }, (err, issue) => {
+    if (err) res.json(err);
+    else res.json("Issue removed successfully");
+  });
+});
+
 // Middleware attached to default route. Now that it is connected to the default route, it will be instantiated in all other routes.
 app.use("/", router);
 
