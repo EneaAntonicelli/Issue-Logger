@@ -25,7 +25,7 @@ connection.once("open", () => {
   console.log("MongoDB database connection has been established successfully.");
 });
 
-// Attach endpoints to the server
+// Attach endpoints to the server and use the mongoose model to send the request to the database
 router.route("/issues").get((req, res) => {
   Issue.find((err, issues) => {
     if (err) console.log("error");
