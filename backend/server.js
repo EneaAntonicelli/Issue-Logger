@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // connect to the MongoDB database using mongoose
-mongoose.connect("");
+mongoose.connect("mongodb://localhost:27017/Issues");
 
 // Establish the connection
 const connection = mongoose.connection;
@@ -52,7 +52,7 @@ router.route("/issues/add").post((req, res) => {
     });
 });
 
-router.route("/issues/update/:id").post(req, res => {
+router.route("/issues/update/:id").post((req, res) => {
   Issue.findById(req.params.id, (err, issue) => {
     if (!issue) return next(new Error("Could not load your document"));
     else issue.title = req.body.title;
