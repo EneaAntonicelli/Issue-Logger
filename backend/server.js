@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 
 import Issue from "./models/Issue";
+import { runInNewContext } from "vm";
 
 const app = express();
 const router = express.Router();
@@ -32,7 +33,45 @@ router.route("/issues").get((req, res) => {
     else res.json(issues);
   });
 });
+// Retreive a single issue from the database
+router.route("/issues/:id").get((req, res) => {
+  Issue.findById(req.params.id, (err, issue) => {
+    if (err) console.log(err);
+    else res.json(issue);
+  });
+});
 
+router.route("/issues/add").post((req, res) => {
+  let issue = new Issue(req.body);
+  issue
+    .save()
+    .then(issue => {
+      res.status(200).json({ issue: "Added Successfully" });
+    })
+    .catch(err => {
+      res.status(400).send("Failed to create a new record");
+    });
+});
+
+router.route("/issues/update/:id").post(req, res => {
+  Issue.findById(req.params.id, (err, issue) => {
+    if (!issue) return next(new Error("Could not load your document"));
+    else issue.title = req.body.title;
+    issue.responsible = req.body.responsible;
+    issue.description = req.body.description;
+    issue.severity = req.body.severity;
+    issue.status = req.body.status;
+
+    issue
+      .save()
+      .then(issue => {
+        res.json("Update complete");
+      })
+      .catch(err => {
+        res.status(400).send("Update failed");
+      });
+  });
+});
 // Middleware attached to default route. Now that it is connected to the default route, it will be instantiated in all other routes.
 app.use("/", router);
 
