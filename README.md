@@ -24,6 +24,7 @@ Another middleware used in conjunction with Express which allows for cross origi
 ### BodyParser
 
 You need to use bodyParser() if you want the form data to be available in req.body.
+Body parser looks at the body, and sees if there are any json objects connected to it. If there are, it will attach them to "req.body"
 
 ### app.use and how it works
 
