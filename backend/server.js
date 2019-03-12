@@ -10,6 +10,7 @@ const app = express();
 const router = express.Router();
 
 // app.use simply instantiates the middleware this particular application will be using. Cors is one such middleware.
+// Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources on a web page to be requested from another domain outside the domain from which the first resource was served.
 app.use(cors());
 // the body date we will get from the requests are in json format; thus the .json is used.
 app.use(bodyParser.json());
