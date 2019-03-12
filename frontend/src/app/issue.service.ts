@@ -24,13 +24,19 @@ export class IssueService {
     };
     return this.http.post(`${this.uri}/issues/add`, issue);
   }
-  updateIssue(id, title, responsible, description, severity) {
+  updateIssue(id, title, responsible, description, severity, status) {
     const issue = {
       title: title,
       responsible: responsible,
       description: description,
-      severity: severity
+      severity: severity,
+      status: status
     };
-    return this.http.post(`${this.uri}/issues/update`, issue);
+    // The second parameter "issue" is added so that the new issue object is part of the body data of this http request
+    return this.http.post(`${this.uri}/issues/update/${id}`, issue);
+  }
+
+  deleteIssue(id) {
+    return this.http.get(`${this.uri}/issues/delete/${id}`);
   }
 }
